@@ -15,9 +15,10 @@ jobs:
       - name: Unzip project
         run: |
           unzip -o kaamdost.zip -d temp_unzip
-          INNER=$(find temp_unzip -maxdepth 2 -name "gradlew" | head -n 1 | xargs dirname)
-          echo "INNER=$INNER" >> $GITHUB_ENV
-          cp -r $INNER/* . 2>/dev/null || cp -r temp_unzip/* .
+          INNER=$(find temp_unzip -name "gradlew" | head -n 1 | xargs dirname)
+          echo "Found in $INNER"
+          cp -r $INNER/. .
+          ls -la
       - name: Make gradlew executable
         run: chmod +x gradlew
       - name: Build Debug APK
@@ -25,5 +26,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: KaamDost-APK
+          name: Kaamdost-APK
           path: app/build/outputs/apk/debug/app-debug.apk
