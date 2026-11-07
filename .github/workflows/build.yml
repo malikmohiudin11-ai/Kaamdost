@@ -15,7 +15,9 @@ jobs:
       - name: Unzip project
         run: |
           unzip -o kaamdost.zip -d temp_unzip
-          INNER=$(find temp_unzip -name "gradlew" | head -n 1 | xargs dirname)
+          ls -la temp_unzip
+          INNER=$(find temp_unzip -name "settings.gradle*" | head -n 1 | xargs -r dirname)
+          if [ -z "$INNER" ]; then INNER=temp_unzip; fi
           echo "Found in $INNER"
           cp -r $INNER/. .
           ls -la
